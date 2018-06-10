@@ -105,14 +105,19 @@ int main(int argc, char* argv[])
 		temp_s[i].radius = rnd( 200.0f ) + 40;
 	}
 	
+	clock_t start = clock();
+
 	bitmap=(unsigned char*)malloc(sizeof(unsigned char)*DIM*DIM*4);
 	for (x=0;x<DIM;x++) 
 		for (y=0;y<DIM;y++) kernel(x,y,temp_s,bitmap);
+	clock_t end = clock();
 	ppm_write(bitmap,DIM,DIM,fp);
 
 	fclose(fp);
 	free(bitmap);
 	free(temp_s);
+
+	printf("CPU ray tracing: %1.2f sec\n",(end-start)/(float)CLOCKS_PER_SEC);
 
 	return 0;
 }
